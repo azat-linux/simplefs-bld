@@ -1,0 +1,9 @@
+# /etc/fstab: static file system information.
+
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+tmpfs		/tmp		tmpfs	mode=1777	0	0
+debugfs		/sys/kernel/debug debugfs defaults	0	0
+
+/dev/vdb	/simplefs	ext4	defaults	0	0
+

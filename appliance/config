@@ -1,0 +1,12 @@
+[General]
+unpack=true
+bootstrap=Debian
+
+[Debian]
+packages=coreutils gawk grep
+packages=git
+packages=makedev
+source=http://mirrors.kernel.org/debian
+suite=jessie
+keyring=debian-archive-keyring
+

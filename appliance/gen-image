@@ -1,0 +1,32 @@
+#!/bin/sh
+
+DIR=$(pwd)
+ROOTDIR=$DIR/rootdir
+RAW_ROOT_FS=$DIR/root_fs.raw
+ROOT_FS=$DIR/root_fs.img
+COMPAT="-o compat=0.10"
+
+mkdir -p $ROOTDIR
+mkdir -p var.cache.apt.archives
+mkdir -p var.lib.apt.lists
+echo -n >| $RAW_ROOT_FS
+
+fallocate -l 1g $RAW_ROOT_FS
+mkfs -t xfs $RAW_ROOT_FS
+mount -t xfs -o loop $RAW_ROOT_FS $ROOTDIR
+
+mkdir -p $ROOTDIR/var/cache/apt/archives
+mount --bind var.cache.apt.archives $ROOTDIR/var/cache/apt/archives
+mkdir -p $ROOTDIR/var/lib/apt/lists
+mount --bind var.lib.apt.lists $ROOTDIR/var/lib/apt/lists
+multistrap -f $DIR/config -d $ROOTDIR
+patch -p0 < config-patches
+cp -r files/* $ROOTDIR/
+
+umount $ROOTDIR/var/cache/apt/archives
+umount $ROOTDIR/var/lib/apt/lists
+umount $ROOTDIR
+rmdir $ROOTDIR
+
+qemu-img convert -f raw -O qcow2 $COMPAT -c $RAW_ROOT_FS $ROOT_FS
+rm -f $RAW_ROOT_FS

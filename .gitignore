@@ -1,0 +1,6 @@
+*.img
+*.raw
+*cache*
+*var*
+*.sw[op]
+rootdir

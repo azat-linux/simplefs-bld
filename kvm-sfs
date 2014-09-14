@@ -1,0 +1,42 @@
+#!/bin/sh
+
+KERNEL=$1
+SFS=$2
+
+DIR=.
+EXTRA_ARG="ignore_loglevel debug loglevel=8"
+NR_CPU=2
+MEM=2048
+ROOT_FS=$DIR/appliance/root_fs.img
+ROOT_DEV=/dev/vda
+SERIAL="-serial telnet::8500,server,nowait \
+        -serial telnet::8501,server,nowait \
+        -serial telnet::8502,server,nowait"
+
+# Prepare sfs folder on a separate hdd
+RAW_SFS_FS=$DIR/sfs.raw
+SFS_FS=$DIR/sfs.img
+SFS_MNT=$DIR/sfs_mnt
+mkdir -p $SFS_MNT
+echo -n >| $RAW_SFS_FS
+fallocate -l 1g $RAW_SFS_FS
+mkfs -t ext4 $RAW_SFS_FS
+mount -t ext4 -o loop $RAW_SFS_FS $SFS_MNT
+rsync --exclude='/.cmake*' --exclude='/build' -r $SFS/* $SFS_MNT/
+umount $SFS_MNT
+qemu-img convert -f raw -O qcow2 -o compat=0.10 -c $RAW_SFS_FS $SFS_FS
+rm -f $RAW_SFS_FS
+
+
+modprobe kvm-intel
+
+kvm -boot order=c \
+    -drive file=$ROOT_FS,if=virtio,snapshot=on \
+    -drive file=$SFS_FS,cache=none,if=virtio \
+    -s \
+    -nographic -smp $NR_CPU -m $MEM \
+    -serial mon:stdio \
+     $SERIAL \
+    --kernel $KERNEL \
+    --append "root=$ROOT_DEV console=ttyS0,115200 $EXTRA_ARG"
+

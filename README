@@ -1,0 +1,15 @@
+
+Build simplefs inside vm.
+Based on xfstests-bld (git://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git).
+
+I do this for several reasons:
+- testing (without panic on desktop)
+- new developer, could just use this scripts, to see how it works
+- various tests using new kernels
+
+How it works:
+- cd appliance/; sudo ./gen-image; cd -
+- sudo ./kvm-sfs /src/oss/linux-vms/arch/x86/boot/bzImage /path/to/simplefs
+
+And you are done!
+
