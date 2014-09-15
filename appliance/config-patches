@@ -8,13 +8,11 @@
  	;;
    restart|reload|force-reload)
  	echo "Error: argument '$1' not supported" >&2
---- rootdir/etc/inittab.orig	2014-03-27 20:09:55.718381955 -0400
-+++ rootdir/etc/inittab	2014-03-27 19:05:03.811901330 -0400
-@@ -67,3 +67,7 @@
- #
- #T3:23:respawn:/sbin/mgetty -x0 -s 57600 ttyS3
+--- rootdir/root/.profile.orig	2014-09-16 02:03:32.257845960 +0400
++++ rootdir/root/.profile	2014-09-16 02:03:53.023845108 +0400
+@@ -6,4 +6,4 @@
+   fi
+ fi
  
-+T0:23:respawn:/sbin/getty -l /root/autologin -n -L ttyS0 115200 vt100
-+T1:23:respawn:/sbin/getty -l /root/autologin -n -L ttyS1 115200 vt100
-+T2:23:respawn:/sbin/getty -l /root/autologin -n -L ttyS2 115200 vt100
-+T3:23:respawn:/sbin/getty -l /root/autologin -n -L ttyS3 115200 vt100
+-mesg n
++tty -s && mesg n
