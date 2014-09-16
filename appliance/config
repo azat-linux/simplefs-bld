@@ -7,6 +7,7 @@ packages=coreutils gawk grep
 packages=git
 packages=makedev
 packages=kmod
+packages=build-essential
 source=http://mirrors.kernel.org/debian
 suite=jessie
 keyring=debian-archive-keyring
