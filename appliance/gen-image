@@ -22,6 +22,7 @@ mount --bind var.lib.apt.lists $ROOTDIR/var/lib/apt/lists
 multistrap -f $DIR/config -d $ROOTDIR
 patch -p0 < config-patches
 cp -r files/* $ROOTDIR/
+chroot $ROOTDIR/ dpkg -i $(ls files/deb/*.deb | sed 's/files//')
 
 umount $ROOTDIR/var/cache/apt/archives
 umount $ROOTDIR/var/lib/apt/lists
