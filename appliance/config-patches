@@ -16,3 +16,8 @@
  
 -mesg n
 +tty -s && mesg n
+--- rootdir/etc/passwd.orig	2014-09-16 15:08:30.316891910 +0400
++++ rootdir/etc/passwd	2014-09-16 15:09:24.339889695 +0400
+@@ -1 +1 @@
+-root:x:0:0:root:/root:/bin/bash
++root::0:0:root:/root:/bin/bash
