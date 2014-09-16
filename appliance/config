@@ -6,6 +6,7 @@ bootstrap=Debian
 packages=coreutils gawk grep
 packages=git
 packages=makedev
+packages=kmod
 source=http://mirrors.kernel.org/debian
 suite=jessie
 keyring=debian-archive-keyring
