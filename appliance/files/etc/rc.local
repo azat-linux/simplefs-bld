@@ -25,6 +25,3 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 cd /simplefs
 ./simple-test.sh
-
-bash
-
