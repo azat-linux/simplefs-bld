@@ -8,6 +8,7 @@ packages=git
 packages=makedev
 packages=kmod
 packages=build-essential strace
+packages=e2fsprogs xfsprogs
 source=http://mirrors.kernel.org/debian
 suite=jessie
 keyring=debian-archive-keyring
