@@ -22,7 +22,14 @@ echo -n >| $RAW_SFS_FS
 fallocate -l 1g $RAW_SFS_FS
 mkfs -t ext4 $RAW_SFS_FS
 mount -t ext4 -o loop $RAW_SFS_FS $SFS_MNT
-rsync --exclude='/.cmake*' --exclude='/build' -r $SFS/* $SFS_MNT/
+rsync \
+    --exclude='*.ko' \
+    --exclude='*.o' \
+    --exclude='*.dwo' \
+    --exclude='Module.*' \
+    --exclude='modules.*' \
+    --exclude='mkfs-simplefs' \
+    -r $SFS/* $SFS_MNT/
 umount $SFS_MNT
 qemu-img convert -f raw -O qcow2 -o compat=0.10 -c $RAW_SFS_FS $SFS_FS
 rm -f $RAW_SFS_FS
