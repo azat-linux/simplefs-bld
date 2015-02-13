@@ -14,7 +14,7 @@
 parse() {
 if grep -q " $1=" /proc/cmdline; then
    for o in $(cat /proc/cmdline | sed -e "s/.* $1=//" | sed -e 's/ .*//'); do
-       export $o
+       echo $o
    done
 else
    echo ""
@@ -23,5 +23,17 @@ fi
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-cd /simplefs
-./simple-test.sh
+disk=$(parse disk)
+mnt=$(parse mnt)
+run=$(parse run)
+
+DISK=${disk:-"/dev/vdb"}
+MNT=${mnt:-"/simplefs"}
+RUN=${run:-"./simple-test.sh"}
+
+mount -o remount,rw /
+mkdir $MNT
+
+mount -t ext4 $DISK $MNT
+cd $MNT
+$RUN

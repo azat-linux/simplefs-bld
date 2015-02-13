@@ -2,6 +2,7 @@
 
 KERNEL=$1
 SFS=$2
+SCRIPT=$3
 
 DIR=.
 EXTRA_ARG="ignore_loglevel debug loglevel=8"
@@ -45,5 +46,5 @@ kvm -boot order=c \
     -serial mon:stdio \
      $SERIAL \
     --kernel $KERNEL \
-    --append "root=$ROOT_DEV console=ttyS0,115200 $EXTRA_ARG"
+    --append "root=$ROOT_DEV console=ttyS0,115200 run=$SCRIPT $EXTRA_ARG"
 
