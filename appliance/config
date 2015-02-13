@@ -9,6 +9,7 @@ packages=makedev
 packages=kmod
 packages=build-essential strace
 packages=e2fsprogs xfsprogs
+packages=fuse libfuse-dev
 source=http://mirrors.kernel.org/debian
 suite=jessie
 keyring=debian-archive-keyring
